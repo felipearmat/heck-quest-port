@@ -1,0 +1,50 @@
+# Build
+build/
+.cache
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.o
+*.obj
+*.lo
+*.slo
+*.d
+*.mod
+*.smod
+*.exe
+*.out
+*.app
+out/
+[Ll]ib/
+[Ll]ibs/
+[Oo]bj/
+[Oo]bjs/
+
+# QPM generated
+extern/
+qpm_defines.cmake
+extern.cmake
+mod.json
+*.qmod
+qmod_temp/
+
+# Optional: uncomment to ignore NDK path file
+# ndkpath.txt
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# NDK (optional, some prefer to track a path)
+# ndkpath.txt
+
+# Logs
+log.txt
+
+# OS
+.DS_Store
+Thumbs.db

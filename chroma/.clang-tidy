@@ -1,0 +1,35 @@
+---
+# Simple clang-tidy configuration using LLVM's standard checks
+Checks: >
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  modernize-*,
+  bugprone-*,
+  performance-*,
+  readability-*,
+  -modernize-use-trailing-return-type,
+  -readability-identifier-length,
+  -readability-redundant-inline-specifier,
+  -cppcoreguidelines-pro-type-reinterpret-cast,
+  -bugprone-casting-through-void,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-exception-escape,
+  -bugprone-reserved-identifier,
+  -readability-magic-numbers,
+  -readability-implicit-bool-conversion,
+  -readability-function-cognitive-complexity,
+  -cppcoreguidelines-init-variables,
+  -cppcoreguidelines-missing-std-forward,
+  -readability-magic-numbers
+
+# Exclude only the extern/ directory but not other paths containing "extern"
+HeaderFilterRegex: "^((?!extern/).)*$"
+
+# The regex above only excludes paths containing the specific directory "extern/"
+# This won't exclude files that just happen to have "extern" in their name
+
+FormatStyle: file
+
+CheckOptions:
+  - key: clang-analyzer-cplusplus.Move.AnalyzeTemporaryDtors
+    value: false
