@@ -28,10 +28,12 @@ jobs:
             echo "VERSION=0.0.0-dev" >> $GITHUB_OUTPUT
           fi
 
-      # Setup qpm-rust and NDK (restore: false — we restore in each project)
+      # Setup qpm-rust and NDK (restore: false — we restore in each project).
+      # package_path required: repo root has no qpm.json; use chroma so the action finds one.
       - name: QPM Rust + NDK
         uses: Fernthedev/qpm-rust-action@v1
         with:
+          package_path: chroma
           workflow_token: ${{ secrets.GITHUB_TOKEN }}
           resolve_ndk: true
           restore: false
