@@ -41,11 +41,11 @@ void ChromaEvents::parseEventData(TracksAD::BeatmapAssociatedData& beatmapAD,
     return;
   }
 
-  if (!customEventData->customData || !customEventData->customData->value) {
+  if (!customEventData->data) {
     return;
   }
 
-  rapidjson::Value const& eventData = *customEventData->customData->value;
+  rapidjson::Value const& eventData = *customEventData->data;
   auto& eventAD = getEventAD(customEventData);
 
   if (eventAD.parsed) {
@@ -59,7 +59,7 @@ void ChromaEvents::parseEventData(TracksAD::BeatmapAssociatedData& beatmapAD,
 
     if (trackIt == eventData.MemberEnd() || trackIt->value.IsNull() || !trackIt->value.IsString()) {
       ChromaLogger::Logger.debug("Track data is missing for Chroma custom event {}",
-                                 customEventData->____time_k__BackingField);
+                                 const_cast<CustomJSONData::CustomEventData*>(customEventData)->time);
       return;
     }
 
@@ -74,7 +74,7 @@ void ChromaEvents::parseEventData(TracksAD::BeatmapAssociatedData& beatmapAD,
 
     if (trackIt == eventData.MemberEnd() || trackIt->value.IsNull() || !trackIt->value.IsString()) {
       ChromaLogger::Logger.debug("Track data is missing for Chroma custom event {}",
-                                 customEventData->____time_k__BackingField);
+                                 const_cast<CustomJSONData::CustomEventData*>(customEventData)->time);
       return;
     }
 

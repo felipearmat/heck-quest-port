@@ -141,13 +141,13 @@ docker build --platform linux/amd64 -t heck-quest-build .
 From the repo root, run **one** of:
 
 ```bash
-./scripts/docker-build.sh
+./scripts/debian/docker-build.sh
 ```
 
 or (PowerShell, e.g. on Windows):
 
 ```powershell
-pwsh ./scripts/docker-build.ps1
+pwsh ./scripts/windows/docker-build.ps1
 ```
 
 This restores dependencies, builds Chroma and Noodle Extensions in release mode, and creates `Chroma.qmod` and `NoodleExtensions.qmod` inside the container. The artifacts are written to the mounted repo, so you get:
@@ -162,9 +162,9 @@ on your host. No local qpm-rust, CMake, Ninja, or NDK needed.
 | Step | Command |
 |------|--------|
 | Build image | `docker build --platform linux/amd64 -t heck-quest-build .` |
-| Run build | `./scripts/docker-build.sh` (or `pwsh ./scripts/docker-build.ps1`) |
+| Run build | `./scripts/debian/docker-build.sh` |
 
-The scripts do **not** auto-detect macOS ARM; you must build the image with `--platform linux/amd64` yourself. Running the container uses the same image, so no extra flags are needed when calling `docker-build.sh` / `docker-build.ps1`. Builds may be slower due to emulation.
+The scripts do **not** auto-detect macOS ARM; you must build the image with `--platform linux/amd64` yourself. Running the container uses the same image, so no extra flags are needed when calling the Debian/Linux script. Builds may be slower due to emulation.
 
 ---
 

@@ -24,8 +24,11 @@ Together, Chroma and Noodle Extensions are “Heck” on Quest. You get **two mo
 
 ## How to build
 
-- **Docker-only (minimal install):** Install only Docker, then build the image and run `./scripts/docker-build.sh` (or `pwsh ./scripts/docker-build.ps1`). On **macOS Apple Silicon**, build the image with `docker build --platform linux/amd64 -t heck-quest-build .`. See [SETUP.md](SETUP.md) Option C.
-- **Host toolchain:** [SETUP.md](SETUP.md): NDK, qpm-rust, CMake, Ninja, ADB.
+- **Docker-only (minimal install):** Install only Docker, then build the image and run the platform-specific script:
+  - Linux/macOS (bash): `./scripts/debian/docker-build.sh`
+  - Windows (PowerShell): `pwsh ./scripts/windows/docker-build.ps1`  
+  On **macOS Apple Silicon**, build the image with `docker build --platform linux/amd64 -t heck-quest-build .`. See [SETUP.md](SETUP.md) Option C.
+- **Host toolchain:** [SETUP.md](SETUP.md): NDK, qpm-rust, CMake, Ninja, ADB. On macOS you can also use `./scripts/mac/build.sh` to install the required tools and build both mods.
 2. **Restore** (once per project):
    - `cd chroma && qpm-rust restore && cd ..`
    - `cd noodleextensions && qpm-rust restore && cd ..`

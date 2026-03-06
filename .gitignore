@@ -29,9 +29,11 @@ extern.cmake
 mod.json
 *.qmod
 qmod_temp/
+qpm.lock
 
-# Optional: uncomment to ignore NDK path file
-# ndkpath.txt
+# Tools and NDK (downloaded by scripts)
+.tools/
+ndkpath.txt
 
 # IDE
 .idea/
@@ -39,12 +41,14 @@ qmod_temp/
 *.swo
 *~
 
-# NDK (optional, some prefer to track a path)
-# ndkpath.txt
-
 # Logs
 log.txt
+*.log
 
 # OS
 .DS_Store
 Thumbs.db
+
+chroma/core
+
+*.core

@@ -6,7 +6,7 @@
   "info": {
     "name": "Noodle Extensions",
     "id": "NoodleExtensions",
-    "version": "1.0.0",
+    "version": "1.5.4",
     "url": null,
     "additionalData": {
       "overrideSoName": "libnoodleextensions.so",
@@ -68,14 +68,14 @@
     },
     {
       "id": "custom-types",
-      "versionRange": "^0.18.4",
+      "versionRange": "^0.18.3",
       "additionalData": {
         "includeQmod": true
       }
     },
     {
       "id": "custom-json-data",
-      "versionRange": "^0.24.4",
+      "versionRange": "^0.24.3",
       "additionalData": {}
     },
     {
@@ -85,12 +85,12 @@
     },
     {
       "id": "tracks",
-      "versionRange": "^2.4.5",
+      "versionRange": "2.4.3",
       "additionalData": {}
     },
     {
       "id": "songcore",
-      "versionRange": "^1.1.25",
+      "versionRange": "^1.1.23",
       "additionalData": {
         "includeQmod": true
       }
@@ -124,7 +124,7 @@
     },
     {
       "id": "bsml",
-      "versionRange": "^0.4.55",
+      "versionRange": "^0.4.54",
       "additionalData": {}
     }
   ]

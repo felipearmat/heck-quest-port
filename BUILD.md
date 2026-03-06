@@ -14,7 +14,7 @@ See [SETUP.md](SETUP.md).
 
 - **Test the CI workflow locally (before push):** Use [act](https://github.com/nektos/act) to run the "Build and Publish" pipeline on your machine: `act workflow_dispatch -j build` from the repo root (or `pwsh ./scripts/run-workflow-local.ps1`). Requires Docker. See [.github/TESTING_WORKFLOW_LOCALLY.md](.github/TESTING_WORKFLOW_LOCALLY.md).
 
-- **Docker-only (minimal host install):** To avoid installing the toolchain on your machine, use the all-in-Docker flow: build the image once, then run `./scripts/docker-build.sh` (or `pwsh ./scripts/docker-build.ps1`) from the repo root. See [SETUP.md](SETUP.md) **Option C**.
+- **Docker-only (minimal host install):** To avoid installing the toolchain on your machine, use the all-in-Docker flow: build the image once, then run the platform-specific script from the repo root — `./scripts/debian/docker-build.sh` (bash) or `pwsh ./scripts/windows/docker-build.ps1` (PowerShell). See [SETUP.md](SETUP.md) **Option C**.
 - **On macOS with Apple Silicon (ARM):** Build the Docker image with `docker build --platform linux/amd64 -t heck-quest-build .` so the NDK (Linux x86_64 only) runs correctly. See [SETUP.md](SETUP.md) Option B (4.1) and Option C (5.1, 5.3).
 - **Reproducible build with Docker (toolchain on host):** Use the Docker image from [SETUP.md](SETUP.md) Option B (restore on host; build inside container).
 
@@ -125,3 +125,14 @@ pwsh ./scripts/build-all.ps1; if ($?) { pwsh ./scripts/createqmod-all.ps1 }
 - [ ] Test both .qmods on Beat Saber Quest **1.40.7**.
 - [ ] Commit, then create and push the tag **`<bs_version>-<heck_version>`** (e.g. `1.40.7-1.8.0`).
 - [ ] Let the GitHub Action create the Release and attach the artifacts, or create the Release manually and upload Chroma.qmod and NoodleExtensions.qmod.
+
+---
+
+## 6. Troubleshooting
+
+### "Cannot upgrade NoodleExtensions to 1.0.0: mod MappingExtensions depends on renga ^1.5.4"
+
+This can appear in QuestPatcher/BMBF when installing or upgrading NoodleExtensions. **MappingExtensions** (another mod) declares a dependency on **renga** ^1.5.4. NoodleExtensions' `mod.json` includes **renga** as a dependency so the installer can satisfy it. If the error persists:
+
+1. Install **renga** (version 1.5.4 or compatible) first from your mod source, then install or upgrade NoodleExtensions.
+2. Or install NoodleExtensions from the .qmod file directly (side-load) instead of through the mod list that triggers the upgrade check.

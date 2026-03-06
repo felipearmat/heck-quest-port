@@ -12,7 +12,7 @@ FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Base build tools + deps for qpm-rust (Rust keyring crate needs libsecret)
+# Base build tools + deps for qpm (keyring crate needs libsecret)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     cmake \
     ninja-build \
@@ -27,13 +27,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Rust (for building qpm-rust)
-ENV PATH="/root/.cargo/bin:${PATH}"
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable \
-    && rustup default stable
-
-# qpm-rust (Quest Package Manager) — required for restore + qmod manifest
-RUN cargo install --git https://github.com/RedBrumbler/QuestPackageManager-Rust --locked
+# QPM.CLI (Quest Package Manager) — prebuilt Linux x64 binary
+# We install it as both `qpm` and `qpm-rust` so existing scripts keep working.
+RUN QPM_VERSION="v1.5.8" && \
+    curl -L "https://github.com/QuestPackageManager/QPM.CLI/releases/download/${QPM_VERSION}/qpm-linux-x64-musl.zip" -o /tmp/qpm.zip && \
+    unzip -q /tmp/qpm.zip -d /tmp/qpm && \
+    mv /tmp/qpm/qpm /usr/local/bin/qpm && \
+    ln -s /usr/local/bin/qpm /usr/local/bin/qpm-rust && \
+    chmod +x /usr/local/bin/qpm /usr/local/bin/qpm-rust && \
+    rm -rf /tmp/qpm /tmp/qpm.zip
 
 # PowerShell (for running build.ps1 / createqmod.ps1 inside container)
 RUN wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb \

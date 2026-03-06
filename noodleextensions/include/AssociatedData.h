@@ -10,6 +10,8 @@
 #include "tracks/shared/Animation/TransformData.hpp"
 
 #include <optional>
+#include <unordered_map>
+#include <any>
 
 namespace GlobalNamespace {
 class CutoutAnimateEffect;
@@ -139,10 +141,11 @@ struct BeatmapEventAssociatedData {
   bool parsed = false;
 };
 
-constexpr BeatmapEventAssociatedData& getEventAD(CustomJSONData::CustomEventData const* customData) {
-  std::any& ad = customData->customData->associatedData['N'];
-  if (!ad.has_value()) ad = std::make_any<BeatmapEventAssociatedData>();
-  return std::any_cast<BeatmapEventAssociatedData&>(ad);
+// custom-json-data 0.24.3 does not expose associatedData on CustomEventData;
+// use a static map keyed by pointer instead.
+inline BeatmapEventAssociatedData& getEventAD(CustomJSONData::CustomEventData const* customData) {
+  static std::unordered_map<CustomJSONData::CustomEventData const*, BeatmapEventAssociatedData> _eventADs;
+  return _eventADs[customData];
 }
 
 constexpr BeatmapObjectAssociatedData& getAD(CustomJSONData::JSONWrapper* customData) {

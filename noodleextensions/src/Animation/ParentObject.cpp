@@ -22,13 +22,13 @@ using namespace Animation;
 
 template <> struct std::hash<std::pair<TrackW, ParentObject*>> {
   std::size_t operator()(std::pair<TrackW, ParentObject*> const& k) const {
-    return std::hash<int>()(k.first.track._0) ^ std::hash<ParentObject*>()(k.second);
+    return std::hash<TrackW>()(k.first) ^ std::hash<ParentObject*>()(k.second);
   }
 };
 // emulate delegates here by associating each Track + Parent to a callback
 // and since callbacks are one time use, we cannot recycle themm when removing them
 // those will cause a crash since they're freed when RemoveGameObjectCallback is called
-static std::unordered_map<std::pair<TrackW, ParentObject*>, TrackW::CWrappedCallback> gameObjectModificationCallbacks;
+static std::unordered_map<std::pair<TrackW, ParentObject*>, void*> gameObjectModificationCallbacks;
 
 static void RemoveCallback(TrackW track, ParentObject* object) {
   auto pair = std::pair(track, object);

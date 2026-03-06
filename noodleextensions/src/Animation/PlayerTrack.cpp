@@ -113,7 +113,8 @@ void PlayerTrack::AssignTrack(TrackW track, PlayerTrackObject object) {
   auto& playerTrack = PlayerTrack::playerTracks[object];
 
   if (playerTrack && playerTrack->track) {
-    playerTrack->track.UnregisterGameObject(playerTrack->get_gameObject());
+    // TODO: TrackW 2.4.3 has no UnregisterGameObject
+    // playerTrack->track.UnregisterGameObject(playerTrack->get_gameObject());
   }
 
   // Init

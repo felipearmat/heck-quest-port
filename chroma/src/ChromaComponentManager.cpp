@@ -38,8 +38,8 @@ struct CoroutineInfo {
   Functions easing;
 };
 
-// PROPERTY NAME -> TRACKFORGAMEOBJECTS & CORO
-static std::unordered_map<std::string, std::unordered_map<TrackW, CoroutineInfo>> coroutines;
+// PROPERTY NAME -> TRACK PTR & CORO (TrackW is not hashable; use raw pointer as key)
+static std::unordered_map<std::string, std::unordered_map<Tracks::ffi::Track*, CoroutineInfo>> coroutines;
 
 void animateBloomFog(std::string_view propName, std::span<UnityEngine::Component* const> components, float val) {
   if (components.empty()) {
@@ -192,7 +192,7 @@ void Chroma::Component::StartEvent(GlobalNamespace::BeatmapCallbacksController* 
 
       for (auto const& [propName, prop] : props) {
         auto& propCoros = coroutines[std::string(propName)];
-        propCoros.emplace(track, CoroutineInfo(componentName, components, prop, duration, customEventData->time, easing));
+        propCoros.emplace(track.track, CoroutineInfo(componentName, components, prop, duration, customEventData->time, easing));
       }
     }
   }

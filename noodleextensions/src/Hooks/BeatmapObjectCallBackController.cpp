@@ -41,6 +41,9 @@ static float GetSpawnAheadTime(BeatmapObjectSpawnController::InitData* initData,
   return moveDuration + (SpawnDataHelper::GetJumpDuration(inputNjs, inputOffset) * 0.5f);
 }
 
+// CustomSliderData lacks aheadTimeNoodle in custom-json-data 0.24.3 - use a static map
+static std::unordered_map<CustomJSONData::CustomSliderData*, float> sliderAheadTimes;
+
 inline float ObjectSortGetTime(BeatmapDataItem* n) {
   static auto* customObstacleDataClass = classof(CustomJSONData::CustomObstacleData*);
   static auto* customNoteDataClass = classof(CustomJSONData::CustomNoteData*);
@@ -57,10 +60,10 @@ inline float ObjectSortGetTime(BeatmapDataItem* n) {
     auto* note = reinterpret_cast<CustomJSONData::CustomNoteData*>(n);
     aheadTime = &note->aheadTimeNoodle;
     customDataWrapper = note->customData;
-  }else if (n->klass == customSliderDataClass) {
-    auto* note = reinterpret_cast<CustomJSONData::CustomSliderData*>(n);
-    aheadTime = &note->aheadTimeNoodle;
-    customDataWrapper = note->customData;
+  } else if (n->klass == customSliderDataClass) {
+    auto* slider = reinterpret_cast<CustomJSONData::CustomSliderData*>(n);
+    aheadTime = &sliderAheadTimes[slider];
+    customDataWrapper = slider->customData;
   } else {
     return n->time;
   }

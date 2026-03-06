@@ -26,10 +26,9 @@ MAKE_HOOK_MATCH(BeatmapObjectManager_Note_Despawn,
   if (customNoteData && customNoteData.value()->customData && customNoteData.value()->customData->value) {
     auto const& tracks = TracksAD::getAD(customNoteData.value()->customData).tracks;
     if (!tracks.empty()) {
-      auto go = noteController->get_gameObject();
-      for (auto const& track : tracks) {
-        track.UnregisterGameObject(go);
-      }
+      // auto go = noteController->get_gameObject();
+      // TODO: TrackW 2.4.3 has no UnregisterGameObject
+      // for (auto const& track : tracks) { track.UnregisterGameObject(go); }
     }
   }
   BeatmapObjectManager_Note_Despawn(self, noteController);
@@ -47,10 +46,9 @@ MAKE_HOOK_MATCH(BeatmapObjectManager_Obstacle_Despawn,
   if (customObstacleData && customObstacleData.value()->customData && customObstacleData.value()->customData->value) {
     auto const& tracks = TracksAD::getAD(customObstacleData.value()->customData).tracks;
     if (!tracks.empty()) {
-      auto go = obstacleController->get_gameObject();
-      for (auto const& track : tracks) {
-        track.UnregisterGameObject(go);
-      }
+      // auto go = obstacleController->get_gameObject();
+      // TODO: TrackW 2.4.3 has no UnregisterGameObject
+      // for (auto const& track : tracks) { track.UnregisterGameObject(go); }
     }
   }
   BeatmapObjectManager_Obstacle_Despawn(self, obstacleController);
@@ -68,10 +66,9 @@ MAKE_HOOK_MATCH(BeatmapObjectManager_Slider_Despawn,
   if (customSliderData && customSliderData.value()->customData && customSliderData.value()->customData->value) {
     auto const& tracks = TracksAD::getAD(customSliderData.value()->customData).tracks;
     if (!tracks.empty()) {
-      auto go = sliderController->get_gameObject();
-      for (auto const& track : tracks) {
-        track.UnregisterGameObject(go);
-      }
+      // auto go = sliderController->get_gameObject();
+      // TODO: TrackW 2.4.3 has no UnregisterGameObject
+      // for (auto const& track : tracks) { track.UnregisterGameObject(go); }
     }
   }
   BeatmapObjectManager_Slider_Despawn(self, sliderController);

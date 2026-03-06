@@ -24,7 +24,7 @@
 #include "tracks/shared/Animation/GameObjectTrackController.hpp"
 #include "tracks/shared/AssociatedData.h"
 #include "tracks/shared/Animation/PointDefinition.h"
-#include "tracks/shared/Animation/TransformData.hpp"
+#include "environment_enhancements/TransformData.hpp"
 
 #include "boost-regex/regex/include/boost/regex.hpp"
 
