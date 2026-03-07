@@ -1,0 +1,28 @@
+# Extends heck-quest-build with Rust nightly + cargo-ndk for Android cross-compilation.
+# Required to build the tracks_rs_link Rust FFI static library (libtracks_rs_link.a),
+# which is linked into libtracks.so.
+#
+# Build:
+#   docker build --platform linux/amd64 -t heck-quest-tracks-build -f Dockerfile.tracks .
+#   (run via scripts/docker-build-tracks.sh which handles this automatically)
+
+FROM heck-quest-build
+
+# Install rustup with nightly toolchain + aarch64-linux-android target
+# We install to /root (Docker runs as root by default)
+ENV CARGO_HOME=/root/.cargo
+ENV RUSTUP_HOME=/root/.rustup
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
+    sh -s -- -y \
+        --default-toolchain nightly \
+        --no-modify-path \
+        --target aarch64-linux-android \
+    && /root/.cargo/bin/rustup target add aarch64-linux-android
+
+# cargo-ndk: wraps cargo build for Android NDK cross-compilation
+RUN /root/.cargo/bin/cargo install cargo-ndk
+
+ENV PATH="/root/.cargo/bin:$PATH"
+
+WORKDIR /src

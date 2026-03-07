@@ -63,6 +63,16 @@ This creates:
 
 Install both on a Quest with Beat Saber 1.40.7 and test before publishing the release.
 
+### 2.4 Populate release folders with .qmod (optional)
+
+As pastas **`releases/1407/`** e **`releases/1408/`** devem conter apenas ficheiros **.qmod** (não .so). Depois do build e createqmod:
+
+```powershell
+pwsh ./scripts/copy-qmods-to-releases.ps1 1407   # ou 1408
+```
+
+Isto copia **Chroma.qmod** e **NoodleExtensions.qmod** para a pasta indicada e remove qualquer .so que lá esteja. Ver **`releases/README.md`** para mais pormenores.
+
 ---
 
 ## 3. Release tag convention: `bs_version-heck_version`
@@ -136,3 +146,31 @@ This can appear in QuestPatcher/BMBF when installing or upgrading NoodleExtensio
 
 1. Install **renga** (version 1.5.4 or compatible) first from your mod source, then install or upgrade NoodleExtensions.
 2. Or install NoodleExtensions from the .qmod file directly (side-load) instead of through the mod list that triggers the upgrade check.
+
+---
+
+## 7. Building Tracks for Beat Saber 1.40.8
+
+The **Tracks** mod (dependency of Chroma and Noodle Extensions) can be built for BS 1.40.8. The build uses Docker (Rust + CMake) and requires a **one-time restore on the host** (qpm-rust resolves from the network and needs a patched registry for CJD 0.24.3 + bs-cordl 4008). The output is **`local_deps/tracks/build/libtracks.so`**; for **releases/1408** use only .qmod (run build + createqmod for Chroma/NE 1.40.8 with that libtracks.so in extern, then **`pwsh ./scripts/copy-qmods-to-releases.ps1 1408`**).
+
+### 7.1 One-time restore on the host
+
+Ensure your QPM registry allows **custom-json-data 0.24.3** and **tracks 2.4.4** to use bs-cordl `>=4007.0.0, <4009.0.0` (see project notes on registry patching). Then:
+
+```bash
+cd local_deps/tracks
+qpm-rust restore
+cd ../..
+```
+
+This creates `local_deps/tracks/extern/`, `extern.cmake`, `qpm_defines.cmake`, and `qpm.lock`. The `extern/libs` symlinks point into your QPM cache (e.g. `~/Library/Application Support/QPM-RS` on macOS).
+
+### 7.2 Docker build
+
+From the **repo root**:
+
+```bash
+./scripts/docker-build-tracks.sh
+```
+
+This script builds the **heck-quest-tracks-build** image (Rust nightly + cargo-ndk) if needed, runs the Rust and CMake/Ninja build inside the container, mounts your QPM cache so `extern/libs` symlinks resolve, and writes **`libtracks.so`** to **`local_deps/tracks/build/`**. For 1.40.8 release packages use only .qmod in **releases/1408/** (see **releases/README.md**): copy that libtracks.so into chroma and noodleextensions extern/libs, build and createqmod, then run **`pwsh ./scripts/copy-qmods-to-releases.ps1 1408`**.

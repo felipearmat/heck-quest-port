@@ -36,6 +36,13 @@ docker run --rm \
     echo "=== Done ==="
     echo "Chroma.qmod:        /src/chroma/Chroma.qmod"
     echo "NoodleExtensions:   /src/noodleextensions/NoodleExtensions.qmod"
+    echo ""
+    echo "=== Copying .qmod to releases/1407 (replacing any .so) ==="
+    mkdir -p /src/releases/1407
+    rm -f /src/releases/1407/*.so
+    cp /src/chroma/Chroma.qmod /src/noodleextensions/NoodleExtensions.qmod /src/releases/1407/
+    echo "  releases/1407/Chroma.qmod"
+    echo "  releases/1407/NoodleExtensions.qmod"
   '
 
 echo ""
