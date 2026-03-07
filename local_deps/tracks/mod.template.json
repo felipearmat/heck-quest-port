@@ -1,19 +1,18 @@
 {
   "_QPVersion": "0.1.1",
-  "name": "Chroma",
+  "name": "Tracks",
   "id": "${mod_id}",
   "coverImage": "cover.png",
-  "author": "Aeroluna",
-  "porter": "FernTheDev, nyamimi~",
+  "author": "StackDoubleFlow, Fernthedev",
   "version": "${version}",
   "packageId": "com.beatgames.beatsaber",
-  "packageVersion": "1.40.8_7379",
-  "description": "Colors!",
+  "packageVersion": "1.40.7_7060",
+  "description": "Animation for Noodle and Chroma. Requires CustomJSONData. Don't delete",
   "modFiles": [],
+  "dependencies": [],
   "lateModFiles": [
     "${binary}"
   ],
-  "dependencies": [],
   "libraryFiles": [],
   "fileCopies": [],
   "copyExtensions": []

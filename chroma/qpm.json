@@ -52,7 +52,7 @@
     },
     {
       "id": "bs-cordl",
-      "versionRange": "4007.*",
+      "versionRange": "4008.*",
       "additionalData": {
         "includeQmod": true,
         "private": true
@@ -60,9 +60,10 @@
     },
     {
       "id": "custom-json-data",
-      "versionRange": "^0.24.2",
+      "versionRange": "^0.24.3",
       "additionalData": {
-        "private": true
+        "private": true,
+        "localPath": "../local_deps/custom-json-data"
       }
     },
     {
@@ -74,7 +75,7 @@
     },
     {
       "id": "bsml",
-      "versionRange": "^0.4.54",
+      "versionRange": "^0.4.55",
       "additionalData": {
         "includeQmod": true,
         "private": true
@@ -92,9 +93,10 @@
     },
     {
       "id": "tracks",
-      "versionRange": "^2.4.3",
+      "versionRange": "^2.4.4",
       "additionalData": {
-        "private": true
+        "private": true,
+        "localPath": "../local_deps/tracks"
       }
     },
     {
@@ -113,7 +115,7 @@
     },
     {
       "id": "songcore",
-      "versionRange": "^1.1.23",
+      "versionRange": "^1.1.26",
       "additionalData": {
         "includeQmod": true,
         "private": true
