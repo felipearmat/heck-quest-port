@@ -11,15 +11,6 @@
 #include <functional>
 #include <unordered_set>
 
-// Tracks 2.4.3 does not provide operator== or std::hash for TrackW.
-inline bool operator==(TrackW const& a, TrackW const& b) {
-  return a.track == b.track;
-}
-template <> struct std::hash<TrackW> {
-  std::size_t operator()(TrackW const& t) const {
-    return std::hash<uintptr_t>()(reinterpret_cast<uintptr_t>(t.track));
-  }
-};
 
 DECLARE_CLASS_CODEGEN(TrackParenting, ParentObject, UnityEngine::MonoBehaviour) {
   DECLARE_DEFAULT_CTOR();
